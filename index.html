@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<style>
+ img{
+   width: 200px
+ }
+</style>
+<script>
+function loadXMLDoc(){
+  var xmlhttp=new XMLHttpRequest()
+  xmlhttp.onreadystatechange=function(){
+    if(xmlhttp.status==200&&xmlhttp.readyState==4){
+     var imgs=JSON.parse(xmlhttp.responseText)
+      document.getElementById('myDiv').innerHTML=imgs
+    }
+  }
+  xmlhttp.open('GET',"http://127.0.0.1:8080",true)
+  xmlhttp.send()
+}
+</script>
+</head>
+<body>
+
+<div id="myDiv"><h2>使用 AJAX 修改该文本内容</h2></div>
+<button type="button" onclick="loadXMLDoc()">修改内容</button>
+
+</body>
+</html>
