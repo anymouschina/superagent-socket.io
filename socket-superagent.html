@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+     a{
+         text-decoration:none;
+         color:#666
+         
+     }
+     #topic_list div{
+         border: 1px solid black
+     }
+     @media screen and (max-width: 600px) {
+    .topic_list div a:before {
+    content: attr(data-label);
+    float: left;
+    text-transform: uppercase;
+    font-weight: bold;
+  }
+}
+    </style>
+</head>
+<body>
+    <input type="text" id="message">
+    <button onclick="send()">获取</button>
+    <div id="topic_list">
+
+    </div>
+    <script src="./node_modules/socket.io-client/dist/socket.io.js"></script>
+    <script>
+     var socket=new io('http://127.0.0.1:3000');
+     socket.on('message',(msg)=>{
+          var $=document.getElementById('topic_list')   
+          var ms=JSON.parse(msg)
+           ms.forEach(element => {
+               var newElement=document.createElement('div');
+               newElement.innerHTML=element
+               var url=newElement.children[0].getAttribute('href')
+               url="http://cnodejs.org"+url
+               newElement.children[0].setAttribute('href',url)
+               newElement.children[0].innerHTML=newElement.children[0].getAttribute('title')
+               $.appendChild(newElement)
+           });
+     });
+    
+     function send(){
+         var txt=document.getElementById('message').value
+         console.log(txt)
+         socket.emit('message',txt)
+     }
+    </script>
+</body>
+</html>
