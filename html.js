@@ -12,5 +12,5 @@ superagent.get(cnode)
     app.get('/',function(req,res){
         res.setHeader('Access-Control-Allow-Origin','*')
         res.end(JSON.stringify(str))
-    }).listen(8080)
+    }).listen(process.env.PORT||5000)
 })
